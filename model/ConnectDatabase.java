@@ -1,23 +1,36 @@
 package model;
 
-import java.sql.*;
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+/**
+ * 
+ * @author Yana Holoborodko
+ * Class for connecting with database
+ *
+ */
+
 public class ConnectDatabase {
 
-	Connection cn = null;
+	private static final String SQLCONN = "jdbc:sqlite:events.db";
 	
-	public static Connection connectDB() {
+	//connectDB -> getConnection
+	public static Connection getConnection() throws SQLException {
 		try{
 			Class.forName("org.sqlite.JDBC");
-			Connection con = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\holob\\workspace\\MyOrganizer1\\mydatabase.db");
-			return con;
-		} catch(Exception ex) {
+			return DriverManager.getConnection(SQLCONN);
+		} catch(ClassNotFoundException ex) {
 			JOptionPane.showMessageDialog(null, ex);
-			return null;
+			System.out.println(ex.getMessage());
 		}
+		return null;
+	}
+	
+	public void saveToDB(String query){
+		
 	}
 	
 	

@@ -1,26 +1,29 @@
 package model;
 
-import java.util.Date;
+import java.sql.Connection;
 
 public class Event {
 
+
+	Connection connection;
 	private String name;
 	private String description;
 	private String category;
-	private Date date;
-	private Date startTime;
-	private Date endTime;
+	private String date;
+	private String startTime;
+	private String endTime;
 	private String location;
 	private boolean reminder;
-	private boolean repeated;
+	private String reminderDate;
+	private String reminderTime;
 	
 	public Event(){
 		
 	}
 	
-	public Event(String name, String description, String category, Date date,
-			Date startTime, Date endTime, String location, boolean reminder,
-			boolean repeated) {
+	public Event(String name, String description, String category, String date,
+			String startTime, String endTime, String location,
+			boolean reminder, String reminderDate, String reminderTime) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -30,67 +33,87 @@ public class Event {
 		this.endTime = endTime;
 		this.location = location;
 		this.reminder = reminder;
-		this.repeated = repeated;
+		this.reminderDate = reminderDate;
+		this.reminderTime = reminderTime;
 	}
 	
-	public boolean isRepeated() {
-		return repeated;
-	}
-	public void setRepeated(boolean repeated) {
-		this.repeated = repeated;
-	}
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public String getCategory() {
 		return category;
 	}
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public Date getDate() {
+
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+
+	public void setDate(String date) {
 		this.date = date;
 	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
 	public String getLocation() {
 		return location;
 	}
+
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
 	public boolean isReminder() {
 		return reminder;
 	}
+
 	public void setReminder(boolean reminder) {
 		this.reminder = reminder;
 	}
 
-	public Date getStartTime() {
-		return startTime;
+	public String getReminderDate() {
+		return reminderDate;
 	}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setReminderDate(String reminderDate) {
+		this.reminderDate = reminderDate;
 	}
 
-	public Date getEndTime() {
-		return endTime;
+	public String getReminderTime() {
+		return reminderTime;
 	}
 
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
+	public void setReminderTime(String reminderTime) {
+		this.reminderTime = reminderTime;
 	}
-
-	
 }

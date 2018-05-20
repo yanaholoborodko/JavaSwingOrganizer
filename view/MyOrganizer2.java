@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -156,10 +157,13 @@ public class MyOrganizer2 extends JFrame {
 	private void initTable() {
 	
 		table = new JTable();
-		Object[] columns = {"Name", "Category", "Date", "Start Time", "End Time", "Location", "Description", "Reminder"};
-		
-		defaultTableModel.setColumnIdentifiers(columns);
-		table.setModel(defaultTableModel);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Name", "Category", "Date", "Start Time", "End Time", "Location", "Description", "Reminder"
+			}
+		));
 		scrollPane.setViewportView(table);
 		springLayout.putConstraint(SpringLayout.NORTH, table, 18,
 				SpringLayout.SOUTH, panel_1);
@@ -304,13 +308,15 @@ public class MyOrganizer2 extends JFrame {
 		this.writeXMLButton.addActionListener(writeXMLButtonListener);
 	}
 	
-	
+	public Date getCalendarDate(){
+		return this.calendar.getDate();
+	}
 	//?
 	public void addRow(Object[] rowData) {
 		defaultTableModel.addRow(rowData);
 	}
 	
-	public void showMessage(String title, String message) {
-		JOptionPane.showMessageDialog(null, message, title, JOptionPane.PLAIN_MESSAGE);
+	public void showErrorMessage(String errorMessage) {
+		JOptionPane.showMessageDialog(this, errorMessage);
 	}
 }

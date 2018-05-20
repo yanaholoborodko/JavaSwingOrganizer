@@ -29,6 +29,8 @@ import model.ConnectDatabase;
 import com.toedter.calendar.JDateChooser;
 
 public class NewEvent {
+	
+	private MyOrganizer2 organizerView;
 
 	// Layout
 	SpringLayout springLayout = new SpringLayout();
@@ -60,7 +62,7 @@ public class NewEvent {
 
 	// Buttons
 	private JButton btnSave;
-	private JButton Clear;
+	private JButton btnClear;
 	
 	SimpleDateFormat format = new SimpleDateFormat("hh:mm");
 
@@ -96,6 +98,8 @@ public class NewEvent {
 		
 	}
 
+	
+	//????????????? here or not
 	Connection con = null;
 	ResultSet results = null;
 	PreparedStatement ps = null;
@@ -348,6 +352,7 @@ public class NewEvent {
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//ці всі штуки мають бути в модел (датабейс)
 				try {
 					// AtomicInteger id = new AtomicInteger(0);
 					java.sql.Date sqlDate;
@@ -385,12 +390,12 @@ public class NewEvent {
 	}
 
 	private void initButtonClear() {
-		Clear = new JButton("Clear");
-		sl_panel.putConstraint(SpringLayout.WEST, Clear, 282,
+		btnClear = new JButton("Clear");
+		sl_panel.putConstraint(SpringLayout.WEST, btnClear, 282,
 				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, Clear, -6, SpringLayout.WEST,
+		sl_panel.putConstraint(SpringLayout.EAST, btnClear, -6, SpringLayout.WEST,
 				btnSave);
-		Clear.addActionListener(new ActionListener() {
+		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				name.setText("");
 				category.select(0);
@@ -403,11 +408,11 @@ public class NewEvent {
 
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.NORTH, Clear, 0,
+		sl_panel.putConstraint(SpringLayout.NORTH, btnClear, 0,
 				SpringLayout.NORTH, btnSave);
-		sl_panel.putConstraint(SpringLayout.SOUTH, Clear, -10,
+		sl_panel.putConstraint(SpringLayout.SOUTH, btnClear, -10,
 				SpringLayout.SOUTH, panel);
-		panel.add(Clear);
+		panel.add(btnClear);
 	}
 
 	private void initReminderDate() {
@@ -438,84 +443,61 @@ public class NewEvent {
 
 	}
 
-	public JTextField getName() {
-		return name;
+	public String getName() {
+		return name.getText();
 	}
 
-	public void setName(JTextField name) {
-		this.name = name;
+	public String getLocation() {
+		return location.getText();
 	}
 
-	public JTextField getLocation() {
-		return location;
+	public String getDescription() {
+		return description.getText();
 	}
 
-	public void setLocation(JTextField location) {
-		this.location = location;
+	public String getStartTime() {
+		return startTime.getText();
 	}
 
-	public JTextArea getDescription() {
-		return description;
+	public String getEndTime() {
+		return endTime.getText();
 	}
 
-	public void setDescription(JTextArea description) {
-		this.description = description;
+	public String getReminderTime() {
+		return reminderTime.getText();
 	}
 
-	public JFormattedTextField getStartTime() {
-		return startTime;
+	public String getCategory() {
+		return category.getSelectedItem();
 	}
 
-	public void setStartTime(JFormattedTextField startTime) {
-		this.startTime = startTime;
+	public String getDate() {
+		return date.getDate().toString();
 	}
 
-	public JFormattedTextField getEndTime() {
-		return endTime;
+	//!!!!!! work this through - date from JCalendar
+	public void setDate() {
+		if(this.organizerView.getCalendarDate() != null){
+		this.date.setDate(this.organizerView.getCalendarDate());
+		}
+		else this.date.setDate(null);	
 	}
 
-	public void setEndTime(JFormattedTextField endTime) {
-		this.endTime = endTime;
+	public boolean getReminder() {
+		return reminder.isSelected();
 	}
 
-	public JFormattedTextField getReminderTime() {
-		return reminderTime;
+	public String getReminderDate() {
+		return reminderDate.getDate().toString();
 	}
 
-	public void setReminderTime(JFormattedTextField reminderTime) {
-		this.reminderTime = reminderTime;
+	
+	//Action listeners for Save and Clear buttons
+	public void saveEventButtonListener(ActionListener saveEventButtonListener){
+		this.btnSave.addActionListener(saveEventButtonListener);
 	}
 
-	public Choice getCategory() {
-		return category;
+	public void clearEventButtonListener(ActionListener clearEventButtonListener){
+		this.btnClear.addActionListener(clearEventButtonListener);
 	}
-
-	public void setCategory(Choice category) {
-		this.category = category;
-	}
-
-	public JDateChooser getDate() {
-		return date;
-	}
-
-	public void setDate(JDateChooser date) {
-		this.date = date;
-	}
-
-	public JCheckBox getReminder() {
-		return reminder;
-	}
-
-	public void setReminder(JCheckBox reminder) {
-		this.reminder = reminder;
-	}
-
-	public JDateChooser getReminderDate() {
-		return reminderDate;
-	}
-
-	public void setReminderDate(JDateChooser reminderDate) {
-		this.reminderDate = reminderDate;
-	}
-
 }
