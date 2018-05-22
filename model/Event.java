@@ -4,8 +4,6 @@ import java.sql.Connection;
 
 public class Event {
 
-
-	Connection connection;
 	private String name;
 	private String description;
 	private String category;

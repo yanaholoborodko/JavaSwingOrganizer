@@ -24,6 +24,7 @@ public class ConnectDatabase {
 			return DriverManager.getConnection(SQLCONN);
 		} catch(ClassNotFoundException ex) {
 			JOptionPane.showMessageDialog(null, ex);
+			System.out.println("ConnectDatabase");
 			System.out.println(ex.getMessage());
 		}
 		return null;

@@ -15,8 +15,9 @@ import view.NewEvent;
 
 /**
  * 
- * @author Yana Holoborodko 30379 EventController class is responsible for
- *         controlling interactions between the View and the Model
+ * @author Yana Holoborodko 30379 
+ * EventController class is responsible for
+ * controlling interactions between the View and the Model
  * 
  */
 
@@ -94,7 +95,7 @@ public class EventController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			e.getActionCommand();
 
 		}
 

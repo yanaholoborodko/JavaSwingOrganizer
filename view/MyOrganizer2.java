@@ -74,6 +74,7 @@ public class MyOrganizer2 extends JFrame {
 		try {
 			initialize();
 		}catch(Exception message) {
+			System.out.println("MyOrganizer");
 			System.out.println(message.getMessage());
 			JOptionPane.showMessageDialog(frmOrganizer, message.getMessage(),"Initialize Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -159,6 +160,7 @@ public class MyOrganizer2 extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
+					
 			},
 			new String[] {
 				"Name", "Category", "Date", "Start Time", "End Time", "Location", "Description", "Reminder"
@@ -267,7 +269,6 @@ public class MyOrganizer2 extends JFrame {
 	
 	
 	//Listeners
-		
 	public void openButtonListener(ActionListener openButtonListener ) {
 		this.itemOpen.addActionListener(openButtonListener);
 	}
@@ -311,6 +312,7 @@ public class MyOrganizer2 extends JFrame {
 	public Date getCalendarDate(){
 		return this.calendar.getDate();
 	}
+	
 	//?
 	public void addRow(Object[] rowData) {
 		defaultTableModel.addRow(rowData);

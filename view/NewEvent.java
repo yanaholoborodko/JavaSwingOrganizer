@@ -23,9 +23,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import model.ConnectDatabase;
-
-
 import com.toedter.calendar.JDateChooser;
 
 public class NewEvent {
@@ -34,7 +31,6 @@ public class NewEvent {
 
 	// Layout
 	SpringLayout springLayout = new SpringLayout();
-	SpringLayout sl_panel = new SpringLayout();
 
 	private JFrame frmNewEvent;
 	private JPanel panel;
@@ -68,7 +64,6 @@ public class NewEvent {
 
 	private void initialize() {
 		initFrame();
-		
 		initPanel();
 		
 		//Init Labels
@@ -99,11 +94,11 @@ public class NewEvent {
 	}
 
 	
-	//????????????? here or not
+/*	//????????????? here or not
 	Connection con = null;
 	ResultSet results = null;
 	PreparedStatement ps = null;
-	AtomicInteger id = new AtomicInteger(0);
+	AtomicInteger id = new AtomicInteger(0);*/
 	
 
 	/**
@@ -124,10 +119,11 @@ public class NewEvent {
 
 	/**
 	 * Create the application.
+	 * 
 	 */
 	public NewEvent() {
 		initialize();
-		con = ConnectDatabase.connectDB();
+		//con = ConnectDatabase.getConnection();
 	}
 
 	/**
@@ -153,109 +149,68 @@ public class NewEvent {
 		springLayout.putConstraint(SpringLayout.EAST, panel, 434,
 				SpringLayout.WEST, frmNewEvent.getContentPane());
 		frmNewEvent.getContentPane().add(panel);
-		panel.setLayout(sl_panel);
 	}
 
 	private void initLabelName() {
+		panel.setLayout(null);
 		lblName = new JLabel("Name:");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblName, 10,
-				SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, lblName, 20,
-				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, lblName, -376,
-				SpringLayout.EAST, panel);
+		lblName.setBounds(20, 10, 38, 16);
 		panel.add(lblName);
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
 	private void initLabelCategory() {
 		lblCategory = new JLabel("Category:");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblCategory, 17,
-				SpringLayout.SOUTH, lblName);
-		sl_panel.putConstraint(SpringLayout.WEST, lblCategory, 20,
-				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, lblCategory, -270,
-				SpringLayout.SOUTH, panel);
+		lblCategory.setBounds(20, 43, 56, 16);
 		panel.add(lblCategory);
 		lblCategory.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
 	private void initLabelDate() {
 		lblDate = new JLabel("Date:");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblDate, 17,
-				SpringLayout.SOUTH, lblCategory);
-		sl_panel.putConstraint(SpringLayout.WEST, lblDate, 0,
-				SpringLayout.WEST, lblName);
+		lblDate.setBounds(20, 76, 31, 16);
 		panel.add(lblDate);
 		lblDate.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
 	private void initLabelStartTime() {
 		lblStartTime = new JLabel("Start time:");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblStartTime, 19,
-				SpringLayout.SOUTH, lblDate);
-		sl_panel.putConstraint(SpringLayout.WEST, lblStartTime, 0,
-				SpringLayout.WEST, lblName);
+		lblStartTime.setBounds(20, 111, 62, 16);
 		panel.add(lblStartTime);
 		lblStartTime.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
 	private void initLabelEndTime() {
 		lblEndTime = new JLabel("End time:");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblEndTime, 19,
-				SpringLayout.SOUTH, lblStartTime);
-		sl_panel.putConstraint(SpringLayout.EAST, lblEndTime, 0,
-				SpringLayout.EAST, lblCategory);
+		lblEndTime.setBounds(21, 146, 55, 16);
 		panel.add(lblEndTime);
 		lblEndTime.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
 	private void initLabelLocation() {
 		lblLocation = new JLabel("Location:");
-		sl_panel.putConstraint(SpringLayout.NORTH, lblLocation, 19,
-				SpringLayout.SOUTH, lblEndTime);
-		sl_panel.putConstraint(SpringLayout.WEST, lblLocation, 0,
-				SpringLayout.WEST, lblName);
+		lblLocation.setBounds(20, 181, 52, 16);
 		panel.add(lblLocation);
 		lblLocation.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
 	private void initLabelDescription() {
 		lblDescription = new JLabel("Description:");
-		sl_panel.putConstraint(SpringLayout.NORTH, reminder, 37,
-				SpringLayout.SOUTH, lblDescription);
-		sl_panel.putConstraint(SpringLayout.NORTH, lblDescription, 21,
-				SpringLayout.SOUTH, lblLocation);
-		sl_panel.putConstraint(SpringLayout.WEST, lblDescription, 20,
-				SpringLayout.WEST, panel);
+		lblDescription.setBounds(20, 218, 68, 16);
 		panel.add(lblDescription);
 		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
 	private void initTFName() {
 		name = new JTextField();
-		sl_panel.putConstraint(SpringLayout.NORTH, name, 10,
-				SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, name, 42, SpringLayout.EAST,
-				lblName);
-		sl_panel.putConstraint(SpringLayout.SOUTH, name, -299,
-				SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, name, -69, SpringLayout.EAST,
-				panel);
+		name.setBounds(100, 10, 265, 20);
 		panel.add(name);
 		name.setColumns(10);
 	}
 
 	private void initChoice() {
 		category = new Choice();
-		sl_panel.putConstraint(SpringLayout.NORTH, category, 13,
-				SpringLayout.SOUTH, name);
-		sl_panel.putConstraint(SpringLayout.WEST, category, 100,
-				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, category, -217,
-				SpringLayout.EAST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, lblCategory, -24,
-				SpringLayout.WEST, category);
+		category.setBounds(100, 44, 117, 20);
 		category.add("--------------------------");
 		category.add("University");
 		category.add("Work");
@@ -270,78 +225,40 @@ public class NewEvent {
 
 	private void initJDateChooser() {
 		date = new JDateChooser();
-		sl_panel.putConstraint(SpringLayout.NORTH, date, 76,
-				SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, date, 49, SpringLayout.EAST,
-				lblDate);
-		sl_panel.putConstraint(SpringLayout.EAST, date, -217,
-				SpringLayout.EAST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, category, -13,
-				SpringLayout.NORTH, date);
-		sl_panel.putConstraint(SpringLayout.SOUTH, date, -233,
-				SpringLayout.SOUTH, panel);
+		date.setBounds(100, 76, 117, 20);
 		panel.add(date);
 	}
 
 	private void initTFStartTime() {
 		startTime = new JFormattedTextField(format);
+		startTime.setBounds(100, 107, 86, 20);
 		startTime.setValue(new Date(11));
-		sl_panel.putConstraint(SpringLayout.NORTH, startTime, -20,
-				SpringLayout.SOUTH, lblStartTime);
-		sl_panel.putConstraint(SpringLayout.WEST, startTime, 18,
-				SpringLayout.EAST, lblStartTime);
-		sl_panel.putConstraint(SpringLayout.SOUTH, startTime, 0,
-				SpringLayout.SOUTH, lblStartTime);
-		sl_panel.putConstraint(SpringLayout.EAST, startTime, 104,
-				SpringLayout.EAST, lblStartTime);
 		panel.add(startTime);
 	}
 
 	private void initTFEndTime() {
 		endTime = new JFormattedTextField(format);
-		sl_panel.putConstraint(SpringLayout.NORTH, location, 19,
-				SpringLayout.SOUTH, endTime);
+		endTime.setBounds(100, 142, 86, 20);
 		endTime.setValue(new Date(11));
-		sl_panel.putConstraint(SpringLayout.NORTH, endTime, 15,
-				SpringLayout.SOUTH, startTime);
-		sl_panel.putConstraint(SpringLayout.WEST, endTime, 24,
-				SpringLayout.EAST, lblEndTime);
-		sl_panel.putConstraint(SpringLayout.EAST, endTime, 0,
-				SpringLayout.EAST, startTime);
 		panel.add(endTime);
 	}
 	
 	private void initTFLocation() {
 		location = new JTextField();
-		sl_panel.putConstraint(SpringLayout.WEST, location, 28,
-				SpringLayout.EAST, lblLocation);
-		sl_panel.putConstraint(SpringLayout.EAST, location, 0,
-				SpringLayout.EAST, name);
+		location.setBounds(100, 181, 265, 20);
 		panel.add(location);
 		location.setColumns(10);
 	}
 	
 	private void initTADescription() {
 		description = new JTextArea();
-		sl_panel.putConstraint(SpringLayout.NORTH, description, 218,
-				SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, description, -64,
-				SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, location, -17,
-				SpringLayout.NORTH, description);
-		sl_panel.putConstraint(SpringLayout.WEST, description, 100,
-				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, description, 277,
-				SpringLayout.EAST, lblDescription);
+		description.setBounds(100, 218, 265, 47);
 		panel.add(description);
 	}
 
 	private void initCBReminder() {
 		reminder = new JCheckBox("Reminder");
-		sl_panel.putConstraint(SpringLayout.WEST, reminder, 10,
-				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, reminder, -33,
-				SpringLayout.SOUTH, panel);
+		reminder.setBounds(10, 271, 81, 25);
 		reminder.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panel.add(reminder);
 	}
@@ -350,11 +267,12 @@ public class NewEvent {
 
 	private void initButtonSave() {
 		btnSave = new JButton("Save");
+		btnSave.setBounds(356, 296, 68, 23);
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ці всі штуки мають бути в модел (датабейс)
 				try {
-					// AtomicInteger id = new AtomicInteger(0);
+/*					// AtomicInteger id = new AtomicInteger(0);
 					java.sql.Date sqlDate;
 					sqlDate = (java.sql.Date) date.getDate();
 
@@ -371,7 +289,7 @@ public class NewEvent {
 					ps.setString(6, location.getText());
 					ps.setString(7, description.getText());
 					ps.setBoolean(8, reminder.isSelected());
-					ps.execute();
+					ps.execute();*/
 
 					JOptionPane.showMessageDialog(null, "The event is saved!");
 				} catch (Exception ex) {
@@ -380,21 +298,12 @@ public class NewEvent {
 
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.WEST, btnSave, -78,
-				SpringLayout.EAST, panel);
-		sl_panel.putConstraint(SpringLayout.SOUTH, btnSave, -10,
-				SpringLayout.SOUTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnSave, -10,
-				SpringLayout.EAST, panel);
 		panel.add(btnSave);
 	}
 
 	private void initButtonClear() {
 		btnClear = new JButton("Clear");
-		sl_panel.putConstraint(SpringLayout.WEST, btnClear, 282,
-				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, btnClear, -6, SpringLayout.WEST,
-				btnSave);
+		btnClear.setBounds(282, 296, 68, 23);
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				name.setText("");
@@ -408,37 +317,21 @@ public class NewEvent {
 
 			}
 		});
-		sl_panel.putConstraint(SpringLayout.NORTH, btnClear, 0,
-				SpringLayout.NORTH, btnSave);
-		sl_panel.putConstraint(SpringLayout.SOUTH, btnClear, -10,
-				SpringLayout.SOUTH, panel);
 		panel.add(btnClear);
 	}
 
 	private void initReminderDate() {
 		reminderDate = new JDateChooser();
+		reminderDate.setBounds(100, 276, 95, 20);
 		reminderDate.setEnabled(false);
-		sl_panel.putConstraint(SpringLayout.NORTH, reminderDate, 11,
-				SpringLayout.SOUTH, description);
-		sl_panel.putConstraint(SpringLayout.WEST, reminderDate, 0,
-				SpringLayout.WEST, name);
-		sl_panel.putConstraint(SpringLayout.SOUTH, reminderDate, 0,
-				SpringLayout.SOUTH, reminder);
-		sl_panel.putConstraint(SpringLayout.EAST, reminderDate, 9,
-				SpringLayout.EAST, startTime);
 		panel.add(reminderDate);
 	}
 
 	private void initReminderTime() {
 		reminderTime = new JFormattedTextField(format);
+		reminderTime.setBounds(100, 299, 73, 20);
 		reminderTime.setEnabled(false);
 		reminderTime.setValue(new Date(11));
-		sl_panel.putConstraint(SpringLayout.NORTH, reminderTime, 3,
-				SpringLayout.SOUTH, reminderDate);
-		sl_panel.putConstraint(SpringLayout.WEST, reminderTime, 100,
-				SpringLayout.WEST, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, reminderTime, 173,
-				SpringLayout.WEST, panel);
 		panel.add(reminderTime);
 
 	}
