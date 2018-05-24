@@ -93,14 +93,6 @@ public class NewEvent {
 		
 	}
 
-	
-/*	//????????????? here or not
-	Connection con = null;
-	ResultSet results = null;
-	PreparedStatement ps = null;
-	AtomicInteger id = new AtomicInteger(0);*/
-	
-
 	/**
 	 * Launch the application.
 	 */
@@ -123,7 +115,6 @@ public class NewEvent {
 	 */
 	public NewEvent() {
 		initialize();
-		//con = ConnectDatabase.getConnection();
 	}
 
 	/**
@@ -134,7 +125,7 @@ public class NewEvent {
 		frmNewEvent = new JFrame();
 		frmNewEvent.setTitle("New Event");
 		frmNewEvent.setBounds(100, 100, 450, 367);
-		frmNewEvent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmNewEvent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmNewEvent.getContentPane().setLayout(springLayout);
 	}
 
@@ -268,36 +259,6 @@ public class NewEvent {
 	private void initButtonSave() {
 		btnSave = new JButton("Save");
 		btnSave.setBounds(356, 296, 68, 23);
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//ці всі штуки мають бути в модел (датабейс)
-				try {
-/*					// AtomicInteger id = new AtomicInteger(0);
-					java.sql.Date sqlDate;
-					sqlDate = (java.sql.Date) date.getDate();
-
-					String query = "insert into event(Name, Category, Date, StartTime, EndTime, Location, Description, Reminder) values ( ?, ?, ?, ?, ?, ?, ?, ?)";
-					ps = con.prepareStatement(query);
-					// ps.setInt(1, id.incrementAndGet());
-					ps.setString(1, name.getText());
-					ps.setString(2, category.getSelectedItem().toString());
-					// ps.setDate(4, (java.sql.Date) dateChooser.getDate());
-					// ps.setDate(4, sqlDate);
-					ps.setDate(3, null);
-					ps.setString(4, startTime.getText());
-					ps.setString(5, endTime.getText());
-					ps.setString(6, location.getText());
-					ps.setString(7, description.getText());
-					ps.setBoolean(8, reminder.isSelected());
-					ps.execute();*/
-
-					JOptionPane.showMessageDialog(null, "The event is saved!");
-				} catch (Exception ex) {
-					System.out.println(ex.getMessage());
-				}
-
-			}
-		});
 		panel.add(btnSave);
 	}
 
@@ -385,12 +346,56 @@ public class NewEvent {
 	}
 
 	
-	//Action listeners for Save and Clear buttons
-	public void saveEventButtonListener(ActionListener saveEventButtonListener){
+	public void setName(String name) {
+		this.name.setText(name);
+	}
+
+	//??
+	public void setCategory(String category) {
+		this.category.setName(category);
+	}
+
+	
+	public void setDate(Date date) {
+		this.date.setDate(date);
+	}
+
+	public void setLocation(String location) {
+		this.location.setText(location);
+	}
+
+	public void setDescription(String description) {
+		this.description.setText(description);
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime.setText(startTime);
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime.setText(endTime);
+	}
+
+	public void setReminderTime(String reminderTime) {
+		this.reminderTime.setText(reminderTime);
+	}
+
+	public void setReminder(boolean reminder) {
+		this.reminder.setSelected(reminder);
+	}
+
+	public void setReminderDate(JDateChooser reminderDate) {
+		this.reminderDate = reminderDate;
+	}
+
+	/**
+	 * Action listeners for Save and Clear buttons
+	 */
+	public void setSaveEventButtonListener(ActionListener saveEventButtonListener){
 		this.btnSave.addActionListener(saveEventButtonListener);
 	}
 
-	public void clearEventButtonListener(ActionListener clearEventButtonListener){
+	public void setClearEventButtonListener(ActionListener clearEventButtonListener){
 		this.btnClear.addActionListener(clearEventButtonListener);
 	}
 }
