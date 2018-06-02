@@ -5,32 +5,25 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.toedter.calendar.JDateChooser;
 
 public class NewEvent {
 	
-	private MyOrganizer2 organizerView;
-
-	// Layout
-	SpringLayout springLayout = new SpringLayout();
+	private OrganizerView organizerView;
 
 	private JFrame frmNewEvent;
 	private JPanel panel;
@@ -55,6 +48,18 @@ public class NewEvent {
 	private JFormattedTextField reminderTime;
 	private JCheckBox reminder;
 	private JDateChooser reminderDate;
+	
+	 String nameS = "";
+	 String categoryS = "";
+	 String dateS = "";
+	private String locationS = "";
+	private String descriptionS = "";
+	private String startTimeS = "";
+	private String endTimeS = "";
+	private boolean reminderS = false;
+	private String reminderDateS = "";
+	private String reminderTimeS = "";
+	
 
 	// Buttons
 	private JButton btnSave;
@@ -62,6 +67,10 @@ public class NewEvent {
 	
 	SimpleDateFormat format = new SimpleDateFormat("hh:mm");
 
+
+	/**
+	 * Initialize all the elements.
+	 */
 	private void initialize() {
 		initFrame();
 		initPanel();
@@ -94,7 +103,7 @@ public class NewEvent {
 	}
 
 	/**
-	 * Launch the application.
+	 * Launch the window for adding new event
 	 */
 	public static void newScreen() {
 		EventQueue.invokeLater(new Runnable() {
@@ -120,25 +129,17 @@ public class NewEvent {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-
 	private void initFrame() {
 		frmNewEvent = new JFrame();
 		frmNewEvent.setTitle("New Event");
 		frmNewEvent.setBounds(100, 100, 450, 367);
 		frmNewEvent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmNewEvent.getContentPane().setLayout(springLayout);
 	}
 
 	private void initPanel() {
+		frmNewEvent.getContentPane().setLayout(null);
 		panel = new JPanel();
-		springLayout.putConstraint(SpringLayout.NORTH, panel, 0,
-				SpringLayout.NORTH, frmNewEvent.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, panel, 0,
-				SpringLayout.WEST, frmNewEvent.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, panel, 329,
-				SpringLayout.NORTH, frmNewEvent.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, panel, 434,
-				SpringLayout.WEST, frmNewEvent.getContentPane());
+		panel.setBounds(0, 0, 434, 329);
 		frmNewEvent.getContentPane().add(panel);
 	}
 
@@ -250,6 +251,19 @@ public class NewEvent {
 	private void initCBReminder() {
 		reminder = new JCheckBox("Reminder");
 		reminder.setBounds(10, 271, 81, 25);
+		reminder.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if(reminder.isSelected() == true) {
+					reminderDate.setEnabled(true);
+					reminderTime.setEnabled(true);
+				} 
+				if(reminder.isSelected() == false) {
+					reminderDate.setEnabled(false);
+					reminderTime.setEnabled(false);
+				} 
+					
+			}
+		});
 		reminder.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panel.add(reminder);
 	}
@@ -258,6 +272,22 @@ public class NewEvent {
 
 	private void initButtonSave() {
 		btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nameS = name.getText();
+				categoryS = category.getSelectedItem();
+				dateS = date.getDate().toString();
+				startTimeS = startTime.getText();
+				endTimeS = endTime.getText();
+				locationS = location.getText();
+				descriptionS = description.getText();
+				reminderS = reminder.isSelected();
+				reminderDateS = reminderDate.getDate().toString();
+				reminderTimeS = reminderTime.getText();
+				
+				System.out.println(nameS + categoryS + dateS + reminderS);
+			}
+		});
 		btnSave.setBounds(356, 296, 68, 23);
 		panel.add(btnSave);
 	}
@@ -275,6 +305,8 @@ public class NewEvent {
 				location.setText("");
 				description.setText("");
 				reminder.setSelected(false);
+				reminderDate.setDate(null);
+				reminderTime.setText("00:00");
 
 			}
 		});
@@ -297,36 +329,46 @@ public class NewEvent {
 
 	}
 
-	public String getName() {
-		return name.getText();
+
+
+	public String getNameS() {
+		return nameS;
 	}
 
-	public String getLocation() {
-		return location.getText();
+	public String getCategoryS() {
+		return categoryS;
 	}
 
-	public String getDescription() {
-		return description.getText();
+	public String getDateS() {
+		return dateS;
 	}
 
-	public String getStartTime() {
-		return startTime.getText();
+	public String getLocationS() {
+		return locationS;
 	}
 
-	public String getEndTime() {
-		return endTime.getText();
+	public String getDescriptionS() {
+		return descriptionS;
 	}
 
-	public String getReminderTime() {
-		return reminderTime.getText();
+	public String getStartTimeS() {
+		return startTimeS;
 	}
 
-	public String getCategory() {
-		return category.getSelectedItem();
+	public String getEndTimeS() {
+		return endTimeS;
 	}
 
-	public String getDate() {
-		return date.getDate().toString();
+	public boolean isReminderS() {
+		return reminderS;
+	}
+
+	public String getReminderDateS() {
+		return reminderDateS;
+	}
+
+	public String getReminderTimeS() {
+		return reminderTimeS;
 	}
 
 	//!!!!!! work this through - date from JCalendar
@@ -335,14 +377,6 @@ public class NewEvent {
 		this.date.setDate(this.organizerView.getCalendarDate());
 		}
 		else this.date.setDate(null);	
-	}
-
-	public boolean getReminder() {
-		return reminder.isSelected();
-	}
-
-	public String getReminderDate() {
-		return reminderDate.getDate().toString();
 	}
 
 	
@@ -389,13 +423,11 @@ public class NewEvent {
 	}
 
 	/**
-	 * Action listeners for Save and Clear buttons
+	 * Action listener for Save button
+	 * @param saveEventButtonListener - Action Listener for Save Button
 	 */
 	public void setSaveEventButtonListener(ActionListener saveEventButtonListener){
 		this.btnSave.addActionListener(saveEventButtonListener);
 	}
 
-	public void setClearEventButtonListener(ActionListener clearEventButtonListener){
-		this.btnClear.addActionListener(clearEventButtonListener);
-	}
 }

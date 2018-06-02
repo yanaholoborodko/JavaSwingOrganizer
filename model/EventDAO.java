@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class EventDAO {
 
-	private Connection connection;
+	private static Connection connection;
 
 	public EventDAO() throws SQLException {
 		connection = ConnectDatabase.getConnection();
@@ -17,13 +17,14 @@ public class EventDAO {
 
 	/**
 	 * Creating event and inserting it into database
-	 * @param event
+	 * @param event - event to be inserted
 	 */
 	public void addEvent(Event event) {
 
 		try {
-			String query = "insert into event(Name, Category, Date, StartTime, EndTime, Location, Description, Reminder) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement ps = connection.prepareStatement(query);
+			System.out.println("Adding event");
+			String query = "insert into eventsTable(name, category, date, startTime, endTime, location, description, reminder, reminderDate, reminderTime) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement ps = connection.prepareStatement("insert into eventsTable(name, category, date, startTime, endTime, location, description, reminder, reminderDate, reminderTime) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			ps.setString(1, event.getName());
 			ps.setString(2, event.getCategory());
 			ps.setString(3, event.getDate());
@@ -34,7 +35,7 @@ public class EventDAO {
 			ps.setBoolean(8, event.isReminder());
 			ps.setString(9, event.getReminderDate());
 			ps.setString(10, event.getReminderTime());
-
+			System.out.println("Adding event2");
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -44,24 +45,31 @@ public class EventDAO {
 	
 	/**
 	 * 
-	 * @param date
+	 * @param date - date for filterin events
 	 * @return ArrayList of Events for a certain date (chosen on JCalendar)
 	 */
-	public ArrayList<Event> getEventsByDate(String date) {
-		ArrayList<Event> eventListByDate = new ArrayList<Event>();
+	public EventList getEventsByDate(String date) {
+		EventList eventListByDate = new EventList();
+		Event event;
 		try {
 			
 			PreparedStatement ps = connection.prepareStatement("select * from event where date = ?");
 			ps.setString(1, date);
             ResultSet rs = ps.executeQuery();
         	while (rs.next()) {
-				Event event = new Event(rs.getString("Name"),
-						rs.getString("Category"), rs.getString("Date"),
-						rs.getString("StartTime"), rs.getString("EndTime"),
-						rs.getString("Location"), rs.getString("Description"),
-						rs.getBoolean("Reminder"),
-						rs.getString("ReminderDate"),
-						rs.getString("ReminderTime"));
+        		
+        		event = new Event();
+				event.setName(rs.getString("name"));
+				event.setCategory(rs.getString("category"));
+				event.setDate(rs.getString("date"));
+				event.setStartTime(rs.getString("startTime"));
+				event.setEndTime(rs.getString("endTime"));
+				event.setLocation(rs.getString("location"));
+				event.setDescription(rs.getString("description"));
+				event.setReminder(rs.getBoolean("reminder"));
+				event.setReminderDate(rs.getString("reminderDate"));
+				event.setReminderTime(rs.getString("reminderTime"));
+				
 				eventListByDate.add(event);
 			}
 
@@ -76,21 +84,36 @@ public class EventDAO {
 	 * 
 	 * @return ArrayList of all Events
 	 */
-	public ArrayList<Event> eventList() {
+	public static EventList eventList() {
 
-		ArrayList<Event> eventList = new ArrayList<Event>();
+		String query = "SELECT * FROM eventsTable";
+		EventList eventList = new EventList();
+		Event event;
+		
 		try {
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from event");
+			ResultSet rs = statement.executeQuery(query);
 
 			while (rs.next()) {
-				Event event = new Event(rs.getString("Name"),
+				event = new Event();
+				event.setName(rs.getString("name"));
+				event.setCategory(rs.getString("category"));
+				event.setDate(rs.getString("date"));
+				event.setStartTime(rs.getString("startTime"));
+				event.setEndTime(rs.getString("endTime"));
+				event.setLocation(rs.getString("location"));
+				event.setDescription(rs.getString("description"));
+				event.setReminder(rs.getBoolean("reminder"));
+				event.setReminderDate(rs.getString("reminderDate"));
+				event.setReminderTime(rs.getString("reminderTime"));
+				
+				/*Event event = new Event(rs.getString("Name"),
 						rs.getString("Category"), rs.getString("Date"),
 						rs.getString("StartTime"), rs.getString("EndTime"),
 						rs.getString("Location"), rs.getString("Description"),
 						rs.getBoolean("Reminder"),
 						rs.getString("ReminderDate"),
-						rs.getString("ReminderTime"));
+						rs.getString("ReminderTime"));*/
 				eventList.add(event);
 			}
 		} catch (Exception e) {

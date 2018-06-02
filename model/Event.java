@@ -1,9 +1,8 @@
 package model;
 
-import java.sql.Connection;
-
 public class Event {
 
+	private int id;
 	private String name;
 	private String description;
 	private String category;
@@ -23,6 +22,7 @@ public class Event {
 			String startTime, String endTime, String location,
 			boolean reminder, String reminderDate, String reminderTime) {
 		super();
+	//	this.id = id;
 		this.name = name;
 		this.description = description;
 		this.category = category;
@@ -35,6 +35,16 @@ public class Event {
 		this.reminderTime = reminderTime;
 	}
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}

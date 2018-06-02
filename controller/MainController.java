@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
@@ -16,8 +14,9 @@ import javax.xml.bind.Marshaller;
 import model.ConnectDatabase;
 import model.Event;
 import model.EventDAO;
-import view.MyOrganizer2;
+import model.EventList;
 import view.NewEvent;
+import view.OrganizerView;
 
 /**
  * 
@@ -29,7 +28,7 @@ import view.NewEvent;
 public class MainController {
 
 	// Views
-	private MyOrganizer2 organizerView;
+	private OrganizerView organizerView;
 	private NewEvent eventView;
 
 	// Model
@@ -39,11 +38,11 @@ public class MainController {
 	// Database
 	private ConnectDatabase database;
 
-	ArrayList<Event> eventList;
+	EventList eventList;
 
 	// Event event1 = new Event();
 
-	public MainController(MyOrganizer2 organizerView, NewEvent eventView,
+	public MainController(OrganizerView organizerView, NewEvent eventView,
 			Event eventModel, EventDAO dao) {
 
 		this.organizerView = organizerView;
@@ -90,10 +89,10 @@ public class MainController {
 
 		this.organizerView
 				.setCalendarPropertyListener(new CalendarPropertyChangeListener());
-
-		this.eventView.setClearEventButtonListener(new ClearEventButtonListener());
-
+		
 		this.eventView.setSaveEventButtonListener(new SaveEventButtonListener());
+
+		
 	}
 
 	public void doRemind(String date, String time) {
@@ -167,7 +166,24 @@ public class MainController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+		/*	Event event = new Event("TEST3", "TEST33", "Work",
+					"21.06.2018", "13:00", 	"15:00", "TEST333",
+					false, "",  "");*/
+			Event event = new Event(eventView.getNameS(),
+					eventView.getDescriptionS(), eventView.getCategoryS(),
+					eventView.getDateS(), eventView.getStartTimeS(),
+					eventView.getEndTimeS(), eventView.getLocationS(),
+					eventView.isReminderS(), eventView.getReminderDateS(),
+					eventView.getReminderTimeS());
+			System.out.println(eventView.getNameS()+
+					eventView.getDescriptionS() + eventView.getCategoryS()+
+					eventView.getDateS()+ eventView.getStartTimeS()+
+					eventView.getEndTimeS()+eventView.getLocationS()+
+					eventView.isReminderS()+ eventView.getReminderDateS()+
+					eventView.getReminderTimeS());
+			dao.addEvent(event);
+			JOptionPane.showMessageDialog(null, "The event is saved!");
+			
 
 		}
 
@@ -217,33 +233,13 @@ public class MainController {
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			String date = organizerView.getCalendarDate().toString();
-			ArrayList<Event> eventListByDate = dao.getEventsByDate(date);
+			EventList eventListByDate = dao.getEventsByDate(date);
 			// metoda updateJtable, zeby wrzucic ta array liste
 			updateJTable(eventListByDate);
 
 		}
 	}
 
-	/**
-	 * Action listener for Clear (Event Window) button
-	 */
-	class ClearEventButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			eventView.setName("");
-			eventView.setCategory("");
-			eventView.setDate(null);
-			eventView.setStartTime("00:00");
-			eventView.setEndTime("00:00");
-			eventView.setLocation("");
-			eventView.setDescription("");
-			eventView.setReminder(false);
-
-		}
-
-	}
 
 	/**
 	 * Action listener for Save (Event Window) button
@@ -253,18 +249,21 @@ public class MainController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			Event event = new Event(eventView.getName(),
-					eventView.getDescription(), eventView.getCategory(),
-					eventView.getDate(), eventView.getStartTime(),
-					eventView.getEndTime(), eventView.getLocation(),
-					eventView.getReminder(), eventView.getReminderDate(),
-					eventView.getReminderTime());
-			System.out.println(eventView.getName()+
-					eventView.getDescription() + eventView.getCategory()+
-					eventView.getDate()+ eventView.getStartTime()+
-					eventView.getEndTime()+eventView.getLocation()+
-					eventView.getReminder()+ eventView.getReminderDate()+
-					eventView.getReminderTime());
+			Event event = new Event("TEST3", "TEST33", "Work",
+					"21.06.2018", "13:00", 	"15:00", "TEST333",
+					false, "",  "");
+		/*	Event event = new Event(eventView.getNameS(),
+					eventView.getDescriptionS(), eventView.getCategoryS(),
+					eventView.getDateS(), eventView.getStartTimeS(),
+					eventView.getEndTimeS(), eventView.getLocationS(),
+					eventView.isReminderS(), eventView.getReminderDateS(),
+					eventView.getReminderTimeS());
+			System.out.println(eventView.getNameS()+
+					eventView.getDescriptionS() + eventView.getCategoryS()+
+					eventView.getDateS()+ eventView.getStartTimeS()+
+					eventView.getEndTimeS()+eventView.getLocationS()+
+					eventView.isReminderS()+ eventView.getReminderDateS()+
+					eventView.getReminderTimeS());*/
 			dao.addEvent(event);
 			JOptionPane.showMessageDialog(null, "The event is saved!");
 			
@@ -272,9 +271,9 @@ public class MainController {
 
 	}
 
-	public void updateJTable(ArrayList<Event> eventList) {
+	public void updateJTable(EventList eventList) {
 		for (int i = 0; i < eventList.size(); i++) {
-
+			
 			String name = eventList.get(i).getName();
 			String description = eventList.get(i).getDescription();
 			String category = eventList.get(i).getCategory();

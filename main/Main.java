@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import model.Event;
 import model.EventDAO;
 import controller.MainController;
-import view.MyOrganizer2;
+import view.OrganizerView;
 import view.NewEvent;
 
 /**
@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException {
 				//View
-				MyOrganizer2 mainView = new MyOrganizer2();
+				OrganizerView mainView = new OrganizerView();
 				NewEvent eventView = new NewEvent();
 				
 				//Models
