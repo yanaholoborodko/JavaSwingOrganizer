@@ -21,12 +21,14 @@ import javax.swing.event.ChangeListener;
 
 import com.toedter.calendar.JDateChooser;
 
+import controller.MainController;
 import util.SerializeManager;
 
 public class NewEvent {
-	
+
 	public static NewEvent instance;
 	private OrganizerView organizerView;
+	private MainController mc;
 
 	private JFrame frmNewEvent;
 	private JPanel panel;
@@ -51,10 +53,10 @@ public class NewEvent {
 	private JFormattedTextField reminderTime;
 	private JCheckBox reminder;
 	private JDateChooser reminderDate;
-	
-	 String nameS = "";
-	 String categoryS = "";
-	 String dateS = "";
+
+	String nameS = "";
+	String categoryS = "";
+	String dateS = "";
 	private String locationS = "";
 	private String descriptionS = "";
 	private String startTimeS = "";
@@ -62,14 +64,12 @@ public class NewEvent {
 	private boolean reminderS = false;
 	private String reminderDateS = "";
 	private String reminderTimeS = "";
-	
 
 	// Buttons
 	private JButton btnSave;
 	private JButton btnClear;
-	
-	SimpleDateFormat format = new SimpleDateFormat("hh:mm");
 
+	SimpleDateFormat format = new SimpleDateFormat("hh:mm");
 
 	/**
 	 * Initialize all the elements.
@@ -77,8 +77,8 @@ public class NewEvent {
 	private void initialize() {
 		initFrame();
 		initPanel();
-		
-		//Init Labels
+
+		// Init Labels
 		initLabelName();
 		initLabelCategory();
 		initLabelDate();
@@ -86,8 +86,8 @@ public class NewEvent {
 		initLabelEndTime();
 		initLabelLocation();
 		initLabelDescription();
-		
-		//Init Fields
+
+		// Init Fields
 		initTFName();
 		initChoice();
 		initJDateChooser();
@@ -98,11 +98,11 @@ public class NewEvent {
 		initCBReminder();
 		initReminderDate();
 		initReminderTime();
-		
-		//Init Buttons
+
+		// Init Buttons
 		initButtonSave();
 		initButtonClear();
-		
+
 	}
 
 	/**
@@ -135,9 +135,10 @@ public class NewEvent {
 	 */
 	private void initFrame() {
 		frmNewEvent = new JFrame();
+		frmNewEvent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmNewEvent.setTitle("New Event");
 		frmNewEvent.setBounds(100, 100, 450, 367);
-		frmNewEvent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 	}
 
 	private void initPanel() {
@@ -238,14 +239,14 @@ public class NewEvent {
 		endTime.setValue(new Date(11));
 		panel.add(endTime);
 	}
-	
+
 	private void initTFLocation() {
 		location = new JTextField();
 		location.setBounds(100, 181, 265, 20);
 		panel.add(location);
 		location.setColumns(10);
 	}
-	
+
 	private void initTADescription() {
 		description = new JTextArea();
 		description.setBounds(100, 218, 265, 47);
@@ -257,22 +258,20 @@ public class NewEvent {
 		reminder.setBounds(10, 271, 81, 25);
 		reminder.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if(reminder.isSelected() == true) {
+				if (reminder.isSelected() == true) {
 					reminderDate.setEnabled(true);
 					reminderTime.setEnabled(true);
-				} 
-				if(reminder.isSelected() == false) {
+				}
+				if (reminder.isSelected() == false) {
 					reminderDate.setEnabled(false);
 					reminderTime.setEnabled(false);
-				} 
-					
+				}
+
 			}
 		});
 		reminder.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		panel.add(reminder);
 	}
-
-
 
 	private void initButtonSave() {
 		btnSave = new JButton("Save");
@@ -288,7 +287,10 @@ public class NewEvent {
 				reminderS = reminder.isSelected();
 				reminderDateS = reminderDate.getDate().toString();
 				reminderTimeS = reminderTime.getText();
-				
+
+				mc.instance.saveNewEvent(nameS, categoryS, dateS, startTimeS, endTimeS, locationS, descriptionS,
+						reminderS, reminderDateS, reminderTimeS);
+
 				System.out.println(nameS + categoryS + dateS + reminderS);
 			}
 		});
@@ -333,8 +335,6 @@ public class NewEvent {
 
 	}
 
-
-
 	public String getNameS() {
 		return nameS;
 	}
@@ -375,25 +375,23 @@ public class NewEvent {
 		return reminderTimeS;
 	}
 
-	//!!!!!! work this through - date from JCalendar
+	// !!!!!! work this through - date from JCalendar
 	public void setDate() {
-		if(this.organizerView.getCalendarDate() != null){
-		this.date.setDate(this.organizerView.getCalendarDate());
-		}
-		else this.date.setDate(null);	
+		if (this.organizerView.getCalendarDate() != null) {
+			this.date.setDate(this.organizerView.getCalendarDate());
+		} else
+			this.date.setDate(null);
 	}
 
-	
 	public void setName(String name) {
 		this.name.setText(name);
 	}
 
-	//??
+	// ??
 	public void setCategory(String category) {
 		this.category.setName(category);
 	}
 
-	
 	public void setDate(Date date) {
 		this.date.setDate(date);
 	}
@@ -428,9 +426,11 @@ public class NewEvent {
 
 	/**
 	 * Action listener for Save button
-	 * @param saveEventButtonListener - Action Listener for Save Button
+	 * 
+	 * @param saveEventButtonListener
+	 *            - Action Listener for Save Button
 	 */
-	public void setSaveEventButtonListener(ActionListener saveEventButtonListener){
+	public void setSaveEventButtonListener(ActionListener saveEventButtonListener) {
 		this.btnSave.addActionListener(saveEventButtonListener);
 	}
 

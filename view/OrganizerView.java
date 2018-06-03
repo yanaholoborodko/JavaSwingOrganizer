@@ -14,12 +14,15 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
+
+import controller.MainController;
+
 import javax.swing.JMenuItem;
 
 public class OrganizerView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private JFrame frmOrganizer;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -107,15 +110,7 @@ public class OrganizerView extends JFrame {
 		String[] columnIDs = new String[] {	"Name", "Category", "Date", "Start Time", "End Time", "Location", "Description", "Reminder"	};
 		defaultTableModel.setColumnIdentifiers(columnIDs);
 		table = new JTable(defaultTableModel);
-	
-	/*	table.setModel(new DefaultTableModel(
-			new Object[][] {
-					
-			},
-			new String[] {
-				"Name", "Category", "Date", "Start Time", "End Time", "Location", "Description", "Reminder"
-			}
-		));*/
+
 		scrollPane.setViewportView(table);
 	}
 
@@ -157,19 +152,6 @@ public class OrganizerView extends JFrame {
 	}
 	
 	
-	//Listeners
-	/*public void openButtonListener(ActionListener openButtonListener ) {
-		this.itemOpen.addActionListener(openButtonListener);
-	}
-	
-	public void saveButtonListener(ActionListener saveButtonListener ) {
-		this.itemSave.addActionListener(saveButtonListener);
-	}
-	
-	public void closeButtonListener(ActionListener closeButtonListener ) {
-		this.itemClose.addActionListener(closeButtonListener);
-	}*/
-	
 	public void settingsButtonListener(ActionListener settingsMenuItemButtonListener ) {
 		this.mSettings.addActionListener(settingsMenuItemButtonListener);
 	}
@@ -207,7 +189,6 @@ public class OrganizerView extends JFrame {
 		return this.calendar.getDate();
 	}
 	
-	//?
 	public void addRow(Object[] rowData) {
 		defaultTableModel.addRow(rowData);
 	}

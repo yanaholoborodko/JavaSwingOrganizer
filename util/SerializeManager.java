@@ -26,7 +26,7 @@ import model.EventList;
 public class SerializeManager {
 
     /**
-     * Static instace of the class.
+     * Static instance of the class.
      */
     public static SerializeManager instance;
 

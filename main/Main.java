@@ -10,25 +10,31 @@ import view.OrganizerView;
 import view.NewEvent;
 
 /**
- * Main class that is used to
- * launch the application.
+ * Main class that is used to launch the application.
  */
 
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-				//View
+				/**
+				 * View
+				 */
 				OrganizerView mainView = new OrganizerView();
-				NewEvent eventView = new NewEvent();
 				
-				//Models
+				/**
+				 * Model
+				 */
 				Event mainModel = new Event();
+				
+				/**
+				 * Data Access Object
+				 */
 				EventDAO dao = new EventDAO();
 				
-				SerializeManager xml = new SerializeManager();
-				
-				//Controller
-				MainController mainController = new MainController(mainView, /*eventView,*/ mainModel, dao);
+				/**
+				 * Controller
+				 */
+				MainController mainController = new MainController(mainView, mainModel, dao);
 	}
 
 }
