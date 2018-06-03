@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import model.Event;
 import model.EventDAO;
+import util.SerializeManager;
 import controller.MainController;
 import view.OrganizerView;
 import view.NewEvent;
@@ -24,8 +25,10 @@ public class Main {
 				Event mainModel = new Event();
 				EventDAO dao = new EventDAO();
 				
+				SerializeManager xml = new SerializeManager();
+				
 				//Controller
-				MainController mainController = new MainController(mainView, eventView, mainModel, dao);
+				MainController mainController = new MainController(mainView, /*eventView,*/ mainModel, dao/*, xml*/);
 	}
 
 }

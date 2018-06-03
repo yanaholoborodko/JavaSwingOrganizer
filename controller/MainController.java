@@ -7,14 +7,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JOptionPane;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import model.ConnectDatabase;
 import model.Event;
 import model.EventDAO;
 import model.EventList;
+import util.SerializeManager;
 import view.NewEvent;
 import view.OrganizerView;
 
@@ -37,37 +35,34 @@ public class MainController {
 
 	// Database
 	private ConnectDatabase database;
+	
+	private SerializeManager xml;
 
 	EventList eventList;
 
 	// Event event1 = new Event();
 
-	public MainController(OrganizerView organizerView, NewEvent eventView,
-			Event eventModel, EventDAO dao) {
+	public MainController(OrganizerView organizerView, /*NewEvent eventView,*/
+			Event eventModel, EventDAO dao/*, SerializeManager xml*/) {
 
 		this.organizerView = organizerView;
 		this.eventModel = eventModel;
-		this.eventView = eventView;
+		//this.eventView = eventView;
 		this.dao = dao;
+		//this.xml = xml;
 		this.database = new ConnectDatabase();
+		
+		eventList = dao.GetEvents();
+		System.out.println(eventList.getList());
+	//	eventList = dao.eventList();
+// то маленьке віконечко
+	//	organizerView.setVisible(true);
 
-		eventList = dao.eventList();
-
-		organizerView.setVisible(true);
-
-		// adding listeners
 		/**
 		 * 
 		 * telling the the view that whenever the ___ button is clicked to
 		 * execute the ActionPerformed method that is going to be in the inner
 		 * class
-		 */
-		/*
-		 * this.organizerView.openButtonListener(new OpenButtonListener());
-		 * 
-		 * this.organizerView.saveButtonListener(new SaveButtonListener());
-		 * 
-		 * this.organizerView.closeButtonListener(new CloseButtonListener());
 		 */
 
 		this.organizerView
@@ -209,7 +204,14 @@ public class MainController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try	{
+			
+			Event event = new Event("TEST3", "TEST33", "Work",
+					"21.06.2018", "13:00", 	"15:00", "TEST333",
+					false, "",  "");
+			eventList.add(event);
+			xml.instance.saveEventsXML();
+			System.out.println("Events saved to XML");
+/*			try	{
 			    JAXBContext jaxbContext = JAXBContext.newInstance(Event.class);
 			    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			 
@@ -220,7 +222,7 @@ public class MainController {
 			} catch (JAXBException ex) {
 				System.out.println(ex.getMessage());
 				System.out.println("Problem with writing into XML file");
-			}
+			}*/
 
 		}
 	}

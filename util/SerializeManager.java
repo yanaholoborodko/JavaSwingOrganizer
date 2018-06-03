@@ -5,15 +5,18 @@
 
 package util;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
 import com.thoughtworks.xstream.XStream;
 
 import model.Event;
 import model.EventDAO;
 import model.EventList;
-import view.OrganizerView;
-
-import java.io.*;
-import java.util.Calendar;
 
 /**
  * Manages all the saving and loading data methods. Contains list of Events.
@@ -28,16 +31,24 @@ public class SerializeManager {
     public static SerializeManager instance;
 
     private final String EventsXML = "PlannedEvents.xml";
+    
+    private EventDAO dao;
 
-    private EventList events;
+    EventList events;
 
     /**
      * A constructor for the class. Creates static singleton, loads data from disk.
      */
     public SerializeManager() {
+    	try {
+			dao = new EventDAO();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         instance = this;
-        EventList preloadedEvents = LoadCalendarEvents();
-        events = preloadedEvents == null ? new EventList() : preloadedEvents;
+        events = dao.GetEvents();
+//        EventList preloadedEvents = LoadCalendarEvents();
+//        events = preloadedEvents == null ? new EventList() : preloadedEvents;
     }
 
     /**
@@ -48,13 +59,7 @@ public class SerializeManager {
         return events;
     }
 
-    /**
-     * Returns an Calendar Events list for a particular day.
-     * @param day Day of an event.
-     * @param month	Month of an event.
-     * @param year	Year of an event.
-     * @return	Array list of Calendar Events to return.
-     */
+
 /*    public EventList GetEventsForDate(int day, int month, int year) {
         EventList foundEvents = new EventList();
         for (Event event : events.list) {
@@ -119,8 +124,9 @@ public class SerializeManager {
     /**
      * Saves Calendar Events list to database.
      */
-    public void SaveEventsXML() {
+    public void saveEventsXML() {
 
+    		
             XStream xStream = new XStream();
             xStream.alias("event", Event.class);
             xStream.alias("list", EventList.class);

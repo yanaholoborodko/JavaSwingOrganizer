@@ -18,11 +18,10 @@ public class Event {
 		
 	}
 	
-	public Event(String name, String description, String category, String date,
-			String startTime, String endTime, String location,
+	public Event(String name, String category, String date,
+			String startTime, String endTime, String location, String description,
 			boolean reminder, String reminderDate, String reminderTime) {
 		super();
-	//	this.id = id;
 		this.name = name;
 		this.description = description;
 		this.category = category;

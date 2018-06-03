@@ -10,7 +10,7 @@ public class EventList implements Iterable<Event>, Iterator<Event> {
 	     * Array list of Planned Events.
 	     */
 	    public ArrayList<Event> list;
-	    private int count;
+		private int count;
 
 	    /**
 	     * A constructor that creates new ArrayList of Events.
@@ -73,8 +73,22 @@ public class EventList implements Iterable<Event>, Iterator<Event> {
 	        count++;
 	        return list.get(count-1);
 	    }
+	    
+	    
+	    /**
+	     * Returns the list of events
+	     */
+	    public ArrayList<Event> getList() {
+	 			return list;
+	 		}
+	    
+	    
+	    
+	    public void setList(ArrayList<Event> list) {
+			this.list = list;
+		}
 
-	    //???????
+		//???????
 		@Override
 		public void remove() {
 			
