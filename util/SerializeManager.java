@@ -32,6 +32,8 @@ public class SerializeManager {
 
     private final String EventsXML = "PlannedEvents.xml";
     
+    private final String readEventsXML = "ReadEvents.xml";
+    
     private EventDAO dao;
 
     EventList events;
@@ -151,7 +153,7 @@ public class SerializeManager {
      * Loads Calendar Events from database.
      * @return	Returns loaded list.
      */
-    public EventList LoadCalendarEvents() {
+    public EventList loadCalendarEvents() {
 
         events = new EventList();
             System.out.println("XML");
@@ -163,7 +165,7 @@ public class SerializeManager {
             String line;
 
             try {
-                FileReader fileReader = new FileReader(EventsXML);
+                FileReader fileReader = new FileReader(readEventsXML);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 StringBuilder stringBuilder = new StringBuilder();
 

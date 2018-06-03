@@ -39,6 +39,8 @@ public class MainController {
 	private SerializeManager xml;
 
 	EventList eventList;
+	
+	EventList eventListFromXML;
 
 	public MainController(OrganizerView organizerView, /*NewEvent eventView,*/
 			Event eventModel, EventDAO dao) {
@@ -189,8 +191,11 @@ public class MainController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
+			eventListFromXML = xml.instance.loadCalendarEvents();
+			updateJTable(eventListFromXML);
+			for(int i = 0; i < eventListFromXML.size(); i++) {
+				dao.addEvent(eventListFromXML.get(i));
+			}
 		}
 
 	}
@@ -274,8 +279,8 @@ public class MainController {
 			String reminderDate = eventList.get(i).getReminderDate();
 			String reminderTime = eventList.get(i).getReminderTime();
 
-			Object[] data = { name, description, category, date, startTime, endTime,
-					location, reminder, reminderDate, reminderTime };
+			Object[] data = { name, category, date, startTime, endTime,
+					location, description, reminder, reminderDate, reminderTime };
 
 			organizerView.addRow(data);
 

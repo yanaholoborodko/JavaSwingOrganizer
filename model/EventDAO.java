@@ -82,32 +82,6 @@ public class EventDAO {
 		return eventListByDate;
 	}
 		
-	
-/*	//blabla
-	public void eventListArray() {
-
-		//ArrayList<Event> eventList = new ArrayList<Event>();
-		try {
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("select * from eventsTable");
-
-			while (rs.next()) {
-				Event event = new Event(rs.getString("Name"),
-						rs.getString("Category"), rs.getString("Date"),
-						rs.getString("StartTime"), rs.getString("EndTime"),
-						rs.getString("Location"), rs.getString("Description"),
-						rs.getBoolean("Reminder"),
-						rs.getString("ReminderDate"),
-						rs.getString("ReminderTime"));
-				eventList.add(event);
-			}
-			
-		//	this.eventList.setList(eventList);;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Problem with getting list of events from db");
-		}
-	}*/
 
 	/**
 	 * Getting all the events from database

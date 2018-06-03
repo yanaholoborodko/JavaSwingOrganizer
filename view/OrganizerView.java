@@ -47,7 +47,6 @@ public class OrganizerView extends JFrame {
 			initialize();
 			frmOrganizer.setVisible(true);
 		}catch(Exception message) {
-			System.out.println("MyOrganizer");
 			System.out.println(message.getMessage());
 			JOptionPane.showMessageDialog(frmOrganizer, message.getMessage(),"Initialize Error", JOptionPane.ERROR_MESSAGE);
 		}
