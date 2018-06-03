@@ -28,7 +28,7 @@ public class Main {
 				SerializeManager xml = new SerializeManager();
 				
 				//Controller
-				MainController mainController = new MainController(mainView, /*eventView,*/ mainModel, dao/*, xml*/);
+				MainController mainController = new MainController(mainView, /*eventView,*/ mainModel, dao);
 	}
 
 }

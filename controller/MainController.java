@@ -40,23 +40,20 @@ public class MainController {
 
 	EventList eventList;
 
-	// Event event1 = new Event();
-
 	public MainController(OrganizerView organizerView, /*NewEvent eventView,*/
-			Event eventModel, EventDAO dao/*, SerializeManager xml*/) {
+			Event eventModel, EventDAO dao) {
 
 		this.organizerView = organizerView;
 		this.eventModel = eventModel;
 		//this.eventView = eventView;
 		this.dao = dao;
-		//this.xml = xml;
 		this.database = new ConnectDatabase();
 		
 		eventList = dao.GetEvents();
 		System.out.println(eventList.getList());
-	//	eventList = dao.eventList();
-// то маленьке віконечко
-	//	organizerView.setVisible(true);
+		
+		updateJTable(eventList);
+
 
 		/**
 		 * 
@@ -85,10 +82,11 @@ public class MainController {
 		this.organizerView
 				.setCalendarPropertyListener(new CalendarPropertyChangeListener());
 		
-		this.eventView.setSaveEventButtonListener(new SaveEventButtonListener());
+		this.eventView.instance.setSaveEventButtonListener(new SaveEventButtonListener());
 
 		
 	}
+
 
 	public void doRemind(String date, String time) {
 
@@ -211,18 +209,7 @@ public class MainController {
 			eventList.add(event);
 			xml.instance.saveEventsXML();
 			System.out.println("Events saved to XML");
-/*			try	{
-			    JAXBContext jaxbContext = JAXBContext.newInstance(Event.class);
-			    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-			 
-			    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			     
-			    //where do I take this list from?
-			  //  jaxbMarshaller.marshal(employees, new File("c:/temp/employees.xml"));
-			} catch (JAXBException ex) {
-				System.out.println(ex.getMessage());
-				System.out.println("Problem with writing into XML file");
-			}*/
+			JOptionPane.showMessageDialog(null, "Events successfully saved to XML");
 
 		}
 	}
@@ -251,10 +238,10 @@ public class MainController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			Event event = new Event("TEST3", "TEST33", "Work",
+			/*	Event event = new Event("TEST3", "TEST33", "Work",
 					"21.06.2018", "13:00", 	"15:00", "TEST333",
 					false, "",  "");
-		/*	Event event = new Event(eventView.getNameS(),
+			Event event = new Event(eventView.getNameS(),
 					eventView.getDescriptionS(), eventView.getCategoryS(),
 					eventView.getDateS(), eventView.getStartTimeS(),
 					eventView.getEndTimeS(), eventView.getLocationS(),
@@ -265,8 +252,8 @@ public class MainController {
 					eventView.getDateS()+ eventView.getStartTimeS()+
 					eventView.getEndTimeS()+eventView.getLocationS()+
 					eventView.isReminderS()+ eventView.getReminderDateS()+
-					eventView.getReminderTimeS());*/
-			dao.addEvent(event);
+					eventView.getReminderTimeS());
+			dao.addEvent(event);*/
 			JOptionPane.showMessageDialog(null, "The event is saved!");
 			
 		}

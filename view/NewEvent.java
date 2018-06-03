@@ -21,8 +21,11 @@ import javax.swing.event.ChangeListener;
 
 import com.toedter.calendar.JDateChooser;
 
+import util.SerializeManager;
+
 public class NewEvent {
 	
+	public static NewEvent instance;
 	private OrganizerView organizerView;
 
 	private JFrame frmNewEvent;
@@ -123,6 +126,7 @@ public class NewEvent {
 	 * 
 	 */
 	public NewEvent() {
+		instance = this;
 		initialize();
 	}
 

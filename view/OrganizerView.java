@@ -104,16 +104,19 @@ public class OrganizerView extends JFrame {
 	}
 
 	private void initTable() {
+		
+		String[] columnIDs = new String[] {	"Name", "Category", "Date", "Start Time", "End Time", "Location", "Description", "Reminder"	};
+		defaultTableModel.setColumnIdentifiers(columnIDs);
+		table = new JTable(defaultTableModel);
 	
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+	/*	table.setModel(new DefaultTableModel(
 			new Object[][] {
 					
 			},
 			new String[] {
 				"Name", "Category", "Date", "Start Time", "End Time", "Location", "Description", "Reminder"
 			}
-		));
+		));*/
 		scrollPane.setViewportView(table);
 	}
 
