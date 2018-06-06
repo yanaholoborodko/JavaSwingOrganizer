@@ -22,8 +22,12 @@ import javax.swing.event.ChangeListener;
 import com.toedter.calendar.JDateChooser;
 
 import controller.MainController;
-import util.SerializeManager;
 
+/**
+ * Window 'New Event' for adding new event to the database
+ * @author Yana Holoborodko 30379
+ *
+ */
 public class NewEvent {
 
 	public static NewEvent instance;
@@ -122,8 +126,7 @@ public class NewEvent {
 	}
 
 	/**
-	 * Create the application.
-	 * 
+	 * Constructor that initializes all the elements of the 'NewEvent' window
 	 */
 	public NewEvent() {
 		instance = this;
@@ -131,7 +134,7 @@ public class NewEvent {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initializing the contents of the frame.
 	 */
 	private void initFrame() {
 		frmNewEvent = new JFrame();
@@ -141,6 +144,9 @@ public class NewEvent {
 
 	}
 
+	/**
+	 * Initializing the panel
+	 */
 	private void initPanel() {
 		frmNewEvent.getContentPane().setLayout(null);
 		panel = new JPanel();
@@ -198,6 +204,9 @@ public class NewEvent {
 		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 13));
 	}
 
+	/**
+	 * Initializing the Name text field
+	 */
 	private void initTFName() {
 		name = new JTextField();
 		name.setBounds(100, 10, 265, 20);
@@ -205,6 +214,9 @@ public class NewEvent {
 		name.setColumns(10);
 	}
 
+	/**
+	 * Initializing the Category combo box
+	 */
 	private void initChoice() {
 		category = new Choice();
 		category.setBounds(100, 44, 117, 20);
@@ -220,19 +232,28 @@ public class NewEvent {
 		panel.add(category);
 	}
 
+	/**
+	 * Initializing the Date JDateChooser
+	 */
 	private void initJDateChooser() {
 		date = new JDateChooser();
 		date.setBounds(100, 76, 117, 20);
 		panel.add(date);
 	}
 
+	/**
+	 * Initializing the StartTime text field
+	 */
 	private void initTFStartTime() {
 		startTime = new JFormattedTextField(format);
 		startTime.setBounds(100, 107, 86, 20);
 		startTime.setValue(new Date(11));
 		panel.add(startTime);
 	}
-
+	
+	/**
+	 * Initializing the EndTime text field
+	 */
 	private void initTFEndTime() {
 		endTime = new JFormattedTextField(format);
 		endTime.setBounds(100, 142, 86, 20);
@@ -240,6 +261,9 @@ public class NewEvent {
 		panel.add(endTime);
 	}
 
+	/**
+	 * Initializing the Location text field
+	 */
 	private void initTFLocation() {
 		location = new JTextField();
 		location.setBounds(100, 181, 265, 20);
@@ -247,12 +271,18 @@ public class NewEvent {
 		location.setColumns(10);
 	}
 
+	/**
+	 * Initializing the Description text area
+	 */
 	private void initTADescription() {
 		description = new JTextArea();
 		description.setBounds(100, 218, 265, 47);
 		panel.add(description);
 	}
 
+	/**
+	 * Initializing the Reminder check box
+	 */
 	private void initCBReminder() {
 		reminder = new JCheckBox("Reminder");
 		reminder.setBounds(10, 271, 81, 25);
@@ -273,6 +303,9 @@ public class NewEvent {
 		panel.add(reminder);
 	}
 
+	/**
+	 * Initializing the Save button
+	 */
 	private void initButtonSave() {
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
@@ -290,7 +323,7 @@ public class NewEvent {
 
 				mc.instance.saveNewEvent(nameS, categoryS, dateS, startTimeS, endTimeS, locationS, descriptionS,
 						reminderS, reminderDateS, reminderTimeS);
-
+	
 				System.out.println(nameS + categoryS + dateS + reminderS);
 			}
 		});
@@ -298,6 +331,9 @@ public class NewEvent {
 		panel.add(btnSave);
 	}
 
+	/**
+	 * Initializing the Clear button
+	 */
 	private void initButtonClear() {
 		btnClear = new JButton("Clear");
 		btnClear.setBounds(282, 296, 68, 23);
@@ -319,6 +355,9 @@ public class NewEvent {
 		panel.add(btnClear);
 	}
 
+	/**
+	 * Initializing the ReminderDate JDateChooser
+	 */
 	private void initReminderDate() {
 		reminderDate = new JDateChooser();
 		reminderDate.setBounds(100, 276, 95, 20);
@@ -326,6 +365,10 @@ public class NewEvent {
 		panel.add(reminderDate);
 	}
 
+
+	/**
+	 * Initializing the ReminderTime text field
+	 */
 	private void initReminderTime() {
 		reminderTime = new JFormattedTextField(format);
 		reminderTime.setBounds(100, 299, 73, 20);
@@ -424,14 +467,5 @@ public class NewEvent {
 		this.reminderDate = reminderDate;
 	}
 
-	/**
-	 * Action listener for Save button
-	 * 
-	 * @param saveEventButtonListener
-	 *            - Action Listener for Save Button
-	 */
-	public void setSaveEventButtonListener(ActionListener saveEventButtonListener) {
-		this.btnSave.addActionListener(saveEventButtonListener);
-	}
 
 }

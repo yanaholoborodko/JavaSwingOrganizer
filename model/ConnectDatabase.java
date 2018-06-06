@@ -8,26 +8,22 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
- * 
+ * Class for connecting with MySQL database
  * @author Yana Holoborodko
- * Class for connecting with SQLite database
- *
  */
-
-
 public class ConnectDatabase {
 
 
 	/**
-	 * URL This is variable which contain a reference(URL) to the database
+	 * URL variable that contains a reference(URL) to the database
 	 */
 	private static final String URL = "jdbc:mysql://localhost:3306/events";
 	/**
-	 * USERNAME This is variable which variable contain the username
+	 * USERNAME variable that contains the username
 	 */
 	private static final String USERNAME = "root";
 	/**
-	 * PASSWORD This is variable which contain the password of user
+	 * PASSWORD variable which contains the password of user
 	 */
 	private static final String PASSWORD = "";
 
@@ -35,17 +31,11 @@ public class ConnectDatabase {
 
 	private Statement statement = null;
 
-	 /**
-     * Variables contain queries to the database
-     * selectTableSQL variable contain queries SELECT to the database
-     * insertTableSQL variable contain queries INSERT to the database
-     */
-    private String selectTableSQL = "";
-    private String insertTableSQL = "";
-	
-//	private static final String SQLCONN = "jdbc:sqlite:C:\\Users\\holob\\workspace\\MyOrganizer1\\src\\events.db";
-
-	
+	/**
+	 * 	The method for establishing the connection with the database
+	 * @return connection to the database
+	 * @throws SQLException
+	 */
 	public static Connection getConnection() throws SQLException {
 		try{
 			 if (connection == null) {
@@ -62,8 +52,6 @@ public class ConnectDatabase {
 		}
 		return null;
 	}	
-	
-	
 	
 
 }

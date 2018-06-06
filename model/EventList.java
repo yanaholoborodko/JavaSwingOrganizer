@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Contains a list of planned events and methods for managing the list. 
+ * Also, it implements Iterable and Iterator in order to be used in loops.
+ * @author Yana Holoborodko 30379
+ *	
+ */
 public class EventList implements Iterable<Event>, Iterator<Event> {
 	  
 	    /**
@@ -77,13 +83,17 @@ public class EventList implements Iterable<Event>, Iterator<Event> {
 	    
 	    /**
 	     * Returns the list of events
+	     * @return list array list of the events
 	     */
 	    public ArrayList<Event> getList() {
 	 			return list;
 	 		}
 	    
 	    
-	    
+	    /**
+	     * setting the list of events
+	     * @param list of the events
+	     */
 	    public void setList(ArrayList<Event> list) {
 			this.list = list;
 		}
@@ -94,6 +104,12 @@ public class EventList implements Iterable<Event>, Iterator<Event> {
 			
 		}
 		
+		/**
+		 * 
+		 * getting the element with 'i' index from the list
+		 * @param i index of the element to get
+		 * @return element with 'i' index from the list
+		 */
 		public Event get(int i) {
 			return list.get(i);
 		}

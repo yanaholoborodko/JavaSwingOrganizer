@@ -1,5 +1,12 @@
 package model;
 
+
+/**
+ * 
+ * Model for the event
+ * @author Yana Holoborodko 30379
+ *
+ */
 public class Event {
 
 	private int id;
@@ -18,6 +25,19 @@ public class Event {
 		
 	}
 	
+	/**
+	 * Constructor for the event
+	 * @param name event`s name
+	 * @param category event`s category
+	 * @param date event`s date
+	 * @param startTime event`s startTime
+	 * @param endTime event`s endTime
+	 * @param location event`s location
+	 * @param description event`s description
+	 * @param reminder event`s reminder
+	 * @param reminderDate event`s reminderDate
+	 * @param reminderTime event`s reminderTime
+	 */
 	public Event(String name, String category, String date,
 			String startTime, String endTime, String location, String description,
 			boolean reminder, String reminderDate, String reminderTime) {

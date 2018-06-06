@@ -17,17 +17,13 @@ import view.NewEvent;
 import view.OrganizerView;
 
 /**
- * 
- * @author Yana Holoborodko 30379 EventController class is responsible for
- *         controlling interactions between the View and the Model
- * 
+ * EventController class is responsible for controlling interactions between the View and the Model
+ *  @author Yana Holoborodko 30379
  */
-
 public class MainController {
 
-	
-    public static MainController instance;
-    
+	public static MainController instance;
+
 	// Views
 	private OrganizerView organizerView;
 	private NewEvent eventView;
@@ -42,11 +38,20 @@ public class MainController {
 	private SerializeManager xml;
 
 	EventList eventList;
-
 	EventList eventListFromXML;
 
-	public MainController(OrganizerView organizerView, /* NewEvent eventView, */
-			Event eventModel, EventDAO dao) {
+	private int idDelete;
+
+	/**
+	 * 
+	 * @param organizerView
+	 *            main window of the application
+	 * @param eventModel
+	 *            model of the event
+	 * @param dao
+	 *            data access object
+	 */
+	public MainController(OrganizerView organizerView, Event eventModel, EventDAO dao) {
 
 		instance = this;
 		this.organizerView = organizerView;
@@ -66,19 +71,19 @@ public class MainController {
 		 * ActionPerformed method that is going to be in the inner class
 		 */
 
-		this.organizerView.settingsButtonListener(new SettingsMenuItemButtonListener());
+		this.organizerView.setSettingsButtonListener(new SettingsMenuItemButtonListener());
 
-		this.organizerView.aboutButtonListener(new AboutButtonListener());
+		this.organizerView.setAboutButtonListener(new AboutButtonListener());
 
-		this.organizerView.addEventButtonListener(new AddEventButtonListener());
+		this.organizerView.setAddEventButtonListener(new AddEventButtonListener());
 
-		this.organizerView.editEventButtonListener(new EditEventButtonListener());
+		this.organizerView.setEditEventButtonListener(new EditEventButtonListener());
 
-		this.organizerView.deleteEventButtonListener(new DeleteEventButtonListener());
+		this.organizerView.setDeleteEventButtonListener(new DeleteEventButtonListener());
 
-		this.organizerView.readXMLButtonListener(new ReadXMLButtonListener());
+		this.organizerView.setReadXMLButtonListener(new ReadXMLButtonListener());
 
-		this.organizerView.writeXMLButtonListener(new WriteXMLButtonListener());
+		this.organizerView.setWriteXMLButtonListener(new WriteXMLButtonListener());
 
 		this.organizerView.setCalendarPropertyListener(new CalendarPropertyChangeListener());
 
@@ -87,28 +92,45 @@ public class MainController {
 	/**
 	 * Creates event from input data and saves it to the database
 	 * 
-	 * @param nameS event`s name
-	 * @param categoryS event`s category
-	 * @param dateS event`s date
-	 * @param startTimeS event`s start time
-	 * @param endTimeS event`s end time
-	 * @param locationS event`s location
-	 * @param descriptionS event`s description
-	 * @param reminderS event`s reminder (if any)
-	 * @param reminderDateS reminder date
-	 * @param reminderTimeS reminder time
+	 * @param nameS
+	 *            event`s name
+	 * @param categoryS
+	 *            event`s category
+	 * @param dateS
+	 *            event`s date
+	 * @param startTimeS
+	 *            event`s start time
+	 * @param endTimeS
+	 *            event`s end time
+	 * @param locationS
+	 *            event`s location
+	 * @param descriptionS
+	 *            event`s description
+	 * @param reminderS
+	 *            event`s reminder (if any)
+	 * @param reminderDateS
+	 *            reminder date
+	 * @param reminderTimeS
+	 *            reminder time
 	 */
-	public void saveNewEvent(String nameS, String  categoryS, String  dateS, String startTimeS, String endTimeS, String locationS, String descriptionS,
-			boolean reminderS, String reminderDateS, String reminderTimeS) {
+	public void saveNewEvent(String nameS, String categoryS, String dateS, String startTimeS, String endTimeS,
+			String locationS, String descriptionS, boolean reminderS, String reminderDateS, String reminderTimeS) {
 
-		Event event = new Event(nameS, categoryS, dateS, startTimeS, endTimeS, locationS, descriptionS,
-				reminderS, reminderDateS, reminderTimeS);
-		System.out.println(nameS + categoryS + dateS + startTimeS + endTimeS + locationS + descriptionS +
-				reminderS + reminderDateS + reminderTimeS);
+		Event event = new Event(nameS, categoryS, dateS, startTimeS, endTimeS, locationS, descriptionS, reminderS,
+				reminderDateS, reminderTimeS);
+		System.out.println(nameS + categoryS + dateS + startTimeS + endTimeS + locationS + descriptionS + reminderS
+				+ reminderDateS + reminderTimeS);
 		dao.addEvent(event);
+		// need to get id of this record from the database?
+		// int id =
+		Object[] data = { /* id, */ nameS, categoryS, dateS, startTimeS, endTimeS, locationS, descriptionS, reminderS,
+				reminderDateS, reminderTimeS };
+
+		organizerView.addRow(data);
+
 		JOptionPane.showMessageDialog(null, "The event is saved!");
 	}
-	
+
 	public void doRemind(String date, String time) {
 
 		Toolkit.getDefaultToolkit().beep();
@@ -138,9 +160,9 @@ public class MainController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null,
-					"The program for keeping track of events, adding and removing them from the list."
-							+ "\nAuthor: Yana Holoborodko 30379");
+
+		JOptionPane.showMessageDialog(null, "The program for keeping track of events, adding and removing them from the list."
+							+ "\nAuthor: Yana Holoborodko 30379", "About the program", 1);
 
 		}
 
@@ -178,10 +200,11 @@ public class MainController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-	
-	//		dao.deleteEvent(event);
-		//	JOptionPane.showMessageDialog(null, "The event is saved!");
+
+			dao.deleteEvent(idDelete);
+			JOptionPane.showMessageDialog(null, "The event is deleted!");
+			eventList = dao.GetEvents();
+			updateJTable(eventList);
 
 		}
 
@@ -211,9 +234,6 @@ public class MainController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			Event event = new Event("TEST3", "TEST33", "Work", "21.06.2018", "13:00", "15:00", "TEST333", false, "",
-					"");
-			eventList.add(event);
 			xml.instance.saveEventsXML();
 			System.out.println("Events saved to XML");
 			JOptionPane.showMessageDialog(null, "Events successfully saved to XML");
@@ -229,20 +249,25 @@ public class MainController {
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
 			String date = organizerView.getCalendarDate().toString();
-			EventList eventListByDate = dao.getEventsByDate(date);
+	//		EventList eventListByDate = dao.getEventsByDate(date);
 			// metoda updateJtable, zeby wrzucic ta array liste
-			updateJTable(eventListByDate);
+		//	updateJTable(eventListByDate);
 
 		}
 	}
 
-/**
- * Method that updates the contents of the table with the new list of events
- * @param eventList list of events to be added to the table
- */
+	/**
+	 * Method that updates the contents of the table with the new list of events
+	 * (by appending those events to the existing ones)
+	 * 
+	 * @param eventList
+	 *            list of events to be added to the table
+	 */
 	public void updateJTable(EventList eventList) {
+		organizerView.clearTable();
 		for (int i = 0; i < eventList.size(); i++) {
 
+			int id = eventList.get(i).getId();
 			String name = eventList.get(i).getName();
 			String description = eventList.get(i).getDescription();
 			String category = eventList.get(i).getCategory();
@@ -254,12 +279,47 @@ public class MainController {
 			String reminderDate = eventList.get(i).getReminderDate();
 			String reminderTime = eventList.get(i).getReminderTime();
 
-			Object[] data = { name, category, date, startTime, endTime, location, description, reminder, reminderDate,
-					reminderTime };
+			Object[] data = { id, name, category, date, startTime, endTime, location, description, reminder,
+					reminderDate, reminderTime };
 
 			organizerView.addRow(data);
 
 		}
+	}
+
+	/**
+	 * Fully updating the JTable
+	 */
+	public void updateJTable() {
+
+		for (int i = 0; i < eventList.size(); i++) {
+
+			int id = eventList.get(i).getId();
+			String name = eventList.get(i).getName();
+			String description = eventList.get(i).getDescription();
+			String category = eventList.get(i).getCategory();
+			String date = eventList.get(i).getDate();
+			String startTime = eventList.get(i).getStartTime();
+			String endTime = eventList.get(i).getEndTime();
+			String location = eventList.get(i).getLocation();
+			boolean reminder = eventList.get(i).isReminder();
+			String reminderDate = eventList.get(i).getReminderDate();
+			String reminderTime = eventList.get(i).getReminderTime();
+
+			Object[] data = { id, name, category, date, startTime, endTime, location, description, reminder,
+					reminderDate, reminderTime };
+
+			organizerView.addRow(data);
+
+		}
+	}
+
+	/**
+	 * Setting the id of the event to be deleted
+	 * @param id id of the event to be deleted
+	 */
+	public void setIdDelete(int id) {
+		this.idDelete = id;
 	}
 
 }

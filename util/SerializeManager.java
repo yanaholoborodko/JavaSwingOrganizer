@@ -1,8 +1,3 @@
-/**
- * util - Package for classes that provide additional 
- * functionality for the project 
- */
-
 package util;
 
 import java.io.BufferedReader;
@@ -19,8 +14,8 @@ import model.EventDAO;
 import model.EventList;
 
 /**
- * Manages all the saving and loading data methods. Contains list of Events.
- * @author Yana Holoborodko
+ * Manages writing and reading from XML.
+ * @author Yana Holoborodko 30379
  *
  */
 public class SerializeManager {
@@ -49,8 +44,6 @@ public class SerializeManager {
 		}
         instance = this;
         events = dao.GetEvents();
-//        EventList preloadedEvents = LoadCalendarEvents();
-//        events = preloadedEvents == null ? new EventList() : preloadedEvents;
     }
 
     /**
@@ -62,29 +55,12 @@ public class SerializeManager {
     }
 
 
-/*    public EventList GetEventsForDate(int day, int month, int year) {
-        EventList foundEvents = new EventList();
-        for (Event event : events.list) {
-            if (event.getDate().get(Calendar.DAY_OF_MONTH) == day && event.date.get(Calendar.MONTH) == month && event.date.get(Calendar.YEAR) == year) {
-                foundEvents.add(event);
-                //continue;
-            }
-        }
-
-        if (foundEvents.size() > 0) {
-            //System.out.println("Events found for " + day + "." + month + "." + year + ": " + foundEvents.size());
-            return foundEvents;
-        }
-        else return null;
-    }*/
-
     /**
      * Adds and event to database.
      * @param event Event to add.
      */
     public void AddEvent(Event event) {
         events.list.add(event);
-  //      SaveCalendarEvents();
     }
 
     /**
@@ -93,14 +69,9 @@ public class SerializeManager {
      */
     public void RemoveEvent(Event event) {
         events.list.remove(event);
-  //      SaveCalendarEvents();
-    }
+     }
 
-    /**
-     * Finds Calendar Event in database using its id. Returns null if not found
-     * @param eventID ID of a particular event.
-     * @return	Event to return. Null if not found.
-     */
+/*
     public Event GetEventByID(int eventID) {
         for (Event event : events.list) {
             if (eventID == event.getId()) {
@@ -108,23 +79,11 @@ public class SerializeManager {
             }
         }
         return null;
-    }
+    }*/
+
 
     /**
-     * Removes Calendar Event from database using its id.
-     * @param eventID ID of a particular event.
-     */
-    public void RemoveEventByID(int eventID) {
-        for (Event event : events.list) {
-            if (eventID == event.getId()) {
-                events.removed(event);
- //               SaveCalendarEvents();
-            }
-        }
-    }
-
-    /**
-     * Saves Calendar Events list to database.
+     * Saves Calendar Events list to XML file.
      */
     public void saveEventsXML() {
 
@@ -150,8 +109,8 @@ public class SerializeManager {
     }
 
     /**
-     * Loads Calendar Events from database.
-     * @return	Returns loaded list.
+     * Reads Events from XML file.
+     * @return	Returns list of events read from XML file.
      */
     public EventList loadCalendarEvents() {
 

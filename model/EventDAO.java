@@ -6,15 +6,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Data Access Object for the event
+ * @author Yana Holoborodko 30379
+ *
+ */
 public class EventDAO {
 
 	private static Connection connection;
 	public EventList eventList;
 	Statement statement1;
 
+	/**
+	 * Constructor that establishes the connection with the database
+	 * @throws SQLException if there is no connection
+	 */
 	public EventDAO() throws SQLException {
 		connection = ConnectDatabase.getConnection();
-	//	eventListArray();
 	}
 
 	/**
@@ -39,17 +47,17 @@ public class EventDAO {
 			ps.setString(10, event.getReminderTime());
 			System.out.println("Adding event2");
 			ps.executeUpdate();
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	/**
-	 * 
-	 * @param date - date for filterin events
+	 * Gets the list of events by the date
+	 * @param date - date for filtering events
 	 * @return ArrayList of Events for a certain date (chosen on JCalendar)
-	 */
+	 *//*
 	public EventList getEventsByDate(String date) {
 		EventList eventListByDate = new EventList();
 		Event event;
@@ -81,7 +89,7 @@ public class EventDAO {
 		}
 		return eventListByDate;
 	}
-		
+		*/
 
 	/**
 	 * Getting all the events from database
@@ -119,58 +127,24 @@ public class EventDAO {
     }
 	
 	/**
-	 * 
-	 * @return ArrayList of all Events
-	 *//*
-	public EventList eventList() {
-
-		String query = "SELECT * FROM eventsTable";
-		eventList = new EventList();
-		Event event;
+	 * Deleting the selected event from the database
+	 * @param id id of the deleted event 
+	 */
+	public void deleteEvent(int id) {
 		
 		try {
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(query);
+			
+			PreparedStatement ps = connection.prepareStatement("delete from eventsTable where id = ?");
+			ps.setInt(1, id);
+            ps.executeUpdate();
 
-			while (rs.next()) {
-				event = new Event();
-				//event.setId(rs.getInt("id");
-				event.setName(rs.getString("name"));
-				event.setCategory(rs.getString("category"));
-				event.setDate(rs.getString("date"));
-				event.setStartTime(rs.getString("startTime"));
-				event.setEndTime(rs.getString("endTime"));
-				event.setLocation(rs.getString("location"));
-				event.setDescription(rs.getString("description"));
-				event.setReminder(rs.getBoolean("reminder"));
-				event.setReminderDate(rs.getString("reminderDate"));
-				event.setReminderTime(rs.getString("reminderTime"));
-				
-				Event event = new Event(rs.getString("Name"),
-						rs.getString("Category"), rs.getString("Date"),
-						rs.getString("StartTime"), rs.getString("EndTime"),
-						rs.getString("Location"), rs.getString("Description"),
-						rs.getBoolean("Reminder"),
-						rs.getString("ReminderDate"),
-						rs.getString("ReminderTime"));
-				eventList.add(event);
-			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Problem with getting list of events from db");
+			System.out.println("Problem with deleting the event");
 		}
-		return eventList;
 	}
-*/
 	
-	public EventList getEventList() {
-		return eventList;
-	}
 
-	public void setEventList(EventList eventList) {
-		this.eventList = eventList;
-	}
-	
 	
 
 }
